@@ -1,8 +1,15 @@
 library project Containers_Lib is
-    for Languages use ("Ada");
-    for Library_Name use "Containers_Lib";
-    for Source_Dirs use ("src");
-    for Object_Dir use "obj";
-    for Library_Dir use "lib";
-    for Library_Kind use "Static";
+
+   for Languages use ("Ada");
+   for Library_Name use "Containers_Lib";
+   for Source_Dirs use ("src");
+   for Object_Dir use "obj";
+   for Library_Dir use "lib";
+   for Library_Kind use "Static";
+
+   package Ide is
+      for Vcs_Kind use "git";
+   end Ide;
+
 end Containers_Lib;
+
