@@ -1,64 +1,16 @@
 with Ada.Unchecked_Deallocation;
 with Ada.Text_IO; use Ada.Text_IO;
 
-package body Containers.Stack_Linked is
+package body Containers.Queue_Linked is
    
    procedure Free(Node : in out Node_Access);
    
-   ------------
-   -- Length --
-   ------------
-
-   function Length (Container : in Stack) return Count_Type is
-   begin
-      return Container.Length;
-   end Length;
-   
-   --------------
-   -- Is_Empty --
-   --------------
-
-   function Is_Empty (Container : in Stack) return Boolean is
-   begin
-      return Container.Length = 0;
-   end Is_Empty;
-   
    -------------
-   -- Is_Full --
+   -- Enqueue --
    -------------
 
-   function Is_Full (Container : in Stack) return Boolean is
-   begin
-      return Container.Length = Container.Capacity;
-   end Is_Full;
-   
-   -----------
-   -- Clear --
-   -----------
-
-   procedure Clear (Container : in out Stack)
-   is
-      Node : Node_Access;
-   begin
-      if Container.Length = 0 then
-         return;
-      end if;
-      
-      while Container.Length > 0
-      loop
-         Node := Container.Head;
-         Container.Head := Container.Head.Next;
-         Free(Node);
-         Container.Length := Container.Length - 1;
-      end loop;
-   end Clear;
-      
-   ----------
-   -- Push --
-   ----------
-
-   procedure Push
-     (Container : in out Stack;
+   procedure Enqueue
+     (Container : in out Queue;
       New_Item  : in Element_Type;
       Success   : out Boolean)
    is
@@ -66,21 +18,28 @@ package body Containers.Stack_Linked is
    begin
       if Container.Length < Container.Capacity
       then
-         New_Node := new Node_Type'(New_Item, Container.Head);
-         Container.Head := New_Node;
+         New_Node := new Node_Type'(New_Item, null);
+         if Container.Head = null then
+            Container.Head := New_Node;
+            Container.Tail := Container.Head;
+         else
+            Container.Tail.Next := New_Node;
+            Container.Tail := New_Node;
+         end if;
+         
          Container.Length := Container.Length + 1;
          Success := True;
       else
          Success := False;
-      end if;                  
-   end Push;
+      end if;
+   end Enqueue;
    
-   ---------
-   -- Pop --
-   ---------
+   -------------
+   -- Dequeue --
+   -------------
 
-   procedure Pop
-     (Container : in out Stack;
+   procedure Dequeue
+     (Container : in out Queue;
       Element   : out Element_Type;
       Success   : out Boolean)
    is
@@ -96,8 +55,29 @@ package body Containers.Stack_Linked is
          Container.Length := Container.Length - 1;
          Success := True;
       end if;
-   end Pop;
+   end Dequeue;
+   
+   -----------
+   -- Clear --
+   -----------
+
+   procedure Clear (Container : in out Queue)
+   is
+      Node : Node_Access;
+   begin
+      if Container.Length = 0 then
+         return;
+      end if;
       
+      while Container.Length > 0
+      loop
+         Node := Container.Head;
+         Container.Head := Container.Head.Next;
+         Container.Length := Container.Length - 1;
+         Free(Node);         
+      end loop;
+   end Clear;
+   
    ----------
    -- Free --
    ----------
@@ -110,14 +90,14 @@ package body Containers.Stack_Linked is
       Node.Next := Node;
       Deallocate(Node);
    end Free;
-   
+
    ---------------
    -- Put_Image --
    ---------------
 
    procedure Put_Image
      (Stream : in out Ada.Strings.Text_Buffers.Root_Buffer_Type'Class;
-      Container : in Stack)
+      Container : in Queue)
    is
       Node   : Node_Access := Container.Head;
    begin
@@ -134,7 +114,7 @@ package body Containers.Stack_Linked is
    -- Initialize --
    ----------------
 
-   procedure Initialize(Container : in out Stack)
+   procedure Initialize(Container : in out Queue)
    is
    begin
       Put_Line("Initialize: " & Container'Image);
@@ -144,7 +124,7 @@ package body Containers.Stack_Linked is
    -- Adjust --
    ------------
 
-   procedure Adjust(Container : in out Stack)
+   procedure Adjust(Container : in out Queue)
    is
       Source : Node_Access := Container.Head;
       Node   : Node_Access;
@@ -157,7 +137,7 @@ package body Containers.Stack_Linked is
       Container.Length := 1;
       Node := Container.Head;
       Source := Source.Next;
-            
+      
       while Source /= null
       loop
          Node.Next := new Node_Type'(Source.Element, null);
@@ -171,10 +151,10 @@ package body Containers.Stack_Linked is
    -- Finalize --
    --------------
 
-   procedure Finalize(Container : in out Stack)
+   procedure Finalize(Container : in out Queue)
    is
    begin
       Clear(Container);
    end Finalize;
-      
-end Containers.Stack_Linked;
+
+end Containers.Queue_Linked;
