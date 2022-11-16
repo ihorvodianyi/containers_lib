@@ -88,20 +88,6 @@ package body Containers.Stack_Linked is
          Success := True;
       end if;
    end Pop;
-   
-   --  procedure Top
-   --    (Container : in out Stack;
-   --     Element   : out Element_Type;
-   --     Success   : out Boolean)
-   --  is
-   --  begin
-   --     if Container.Length = 0 then
-   --        Success := False;
-   --     else
-   --        Element := Container.Head.Element;
-   --        Success := True;
-   --        end if;
-   --  end Top;
       
    ----------
    -- Free --
@@ -112,40 +98,74 @@ package body Containers.Stack_Linked is
         new Ada.Unchecked_Deallocation (Node_Type, Node_Access);
 
    begin
-      --  While a node is in use, as an active link in a list, its Previous and
-      --  Next components must be null, or designate a different node; this is
-      --  a node invariant. Before actually deallocating the node, we set both
-      --  access value components of the node to point to the node itself, thus
-      --  falsifying the node invariant. Subprogram Vet inspects the value of
-      --  the node components when interrogating the node, in order to detect
-      --  whether the cursor's node access value is dangling.
-
-      --  Note that we have no guarantee that the storage for the node isn't
-      --  modified when it is deallocated, but there are other tests that Vet
-      --  does if node invariants appear to be satisifed. However, in practice
-      --  this simple test works well enough, detecting dangling references
-      --  immediately, without needing further interrogation.
-
       Node.Next := Node;
       Deallocate(Node);
    end Free;
    
-   procedure Initialize(Item : in out Stack)
+   ---------------
+   -- Put_Image --
+   ---------------
+
+   procedure Put_Image
+     (Stream : in out Ada.Strings.Text_Buffers.Root_Buffer_Type'Class;
+      Container : in Stack)
+   is
+      Node   : Node_Access := Container.Head;
+   begin
+      Stream.Put("{Capacity: " & Container.Capacity'Image & " | Length: " & Container.Length'Image & " | Head: " & Container.Head'Image & " [");    
+      while Node /= null
+      loop
+         Element_Type'Put_Image(Stream, Node.Element);
+         Node := Node.Next;
+      end loop;      
+      Stream.Put("]}");
+   end Put_Image;
+   
+   ----------------
+   -- Initialize --
+   ----------------
+
+   procedure Initialize(Container : in out Stack)
    is
    begin
-      Put_Line("Initialize | Capacity: " & Item.Capacity'Image & " | Length: " & Item.Length'Image & " | Head: " & Item.Head'Image);
+      Put_Line("Initialize: " & Container'Image);
    end Initialize;
    
-   procedure Adjust(Item : in out Stack)
+   ------------
+   -- Adjust --
+   ------------
+
+   procedure Adjust(Container : in out Stack)
    is
+      Source : Node_Access := Container.Head;
+      Node   : Node_Access;
    begin
-      Put_Line("Adjust | Capacity: " & Item.Capacity'Image & " | Length: " & Item.Length'Image & " | Head: " & Item.Head'Image);
+      if Source = null then
+         return;
+      end if;
+      
+      Container.Head := new Node_Type'(Source.Element, null);
+      Container.Length := 1;
+      Node := Container.Head;
+      Source := Source.Next;
+            
+      while Source /= null
+      loop
+         Node.Next := new Node_Type'(Source.Element, null);
+         Node := Node.Next;
+         Container.Length := @ + 1;
+         Source := Source.Next;
+      end loop;
    end Adjust;
    
-   procedure Finalize(Item : in out Stack)
+   --------------
+   -- Finalize --
+   --------------
+
+   procedure Finalize(Container : in out Stack)
    is
    begin
-      Put_Line("Finalize | Capacity: " & Item.Capacity'Image & " | Length: " & Item.Length'Image & " | Head: " & Item.Head'Image);
+      Clear(Container);
    end Finalize;
       
 end Containers.Stack_Linked;

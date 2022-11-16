@@ -1,6 +1,9 @@
 with Containers.Stack_Interface;
 with Ada.Finalization;
 
+private with Ada.Streams;
+private with Ada.Strings.Text_Buffers;
+
 generic
    type Element_Type is private;
 
@@ -24,11 +27,6 @@ package Containers.Stack_Linked is
       Element   : out Element_Type;
       Success   : out Boolean);
    
-   --  procedure Top
-   --    (Container : in out Stack;
-   --     Element   : out Element_Type;
-   --     Success   : out Boolean);
-   
 private
    
    type Node_Type;
@@ -44,11 +42,15 @@ private
       record
          Head           : Node_Access:= null;
          Length         : Count_Type := 0;
-      end record;
+      end record with Put_Image => Put_Image;
    
-   procedure Initialize(Item : in out Stack);
-   procedure Adjust(Item : in out Stack);
-   procedure Finalize(Item : in out Stack);
+   procedure Put_Image
+     (Stream : in out Ada.Strings.Text_Buffers.Root_Buffer_Type'Class;
+      Container : in Stack);
+   
+   procedure Initialize(Container : in out Stack);
+   procedure Adjust(Container : in out Stack);
+   procedure Finalize(Container : in out Stack);
    
 
 end Containers.Stack_Linked;
