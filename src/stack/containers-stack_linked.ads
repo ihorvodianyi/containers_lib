@@ -1,4 +1,3 @@
-with Containers.Stack_Interface;
 with Ada.Finalization;
 
 private with Ada.Streams;
@@ -12,9 +11,7 @@ package Containers.Stack_Linked is
    type Stack (Capacity : Count_Type) is private;
 
    function Length (Container : in Stack) return Count_Type;
-
    function Is_Empty (Container : in Stack) return Boolean;
-
    function Is_Full (Container : in Stack) return Boolean;
 
    procedure Clear (Container : in out Stack);

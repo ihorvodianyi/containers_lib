@@ -5,6 +5,33 @@ package body Containers.Queue_Linked is
    
    procedure Free(Node : in out Node_Access);
    
+   ------------
+   -- Length --
+   ------------
+
+   function Length (Container : in Queue) return Count_Type is
+   begin
+      return Container.Length;
+   end Length;
+   
+   --------------
+   -- Is_Empty --
+   --------------
+
+   function Is_Empty (Container : in Queue) return Boolean is
+   begin
+      return Container.Length = 0;
+   end Is_Empty;
+   
+   -------------
+   -- Is_Full --
+   -------------
+
+   function Is_Full (Container : in Queue) return Boolean is
+   begin
+      return Container.Length = Container.Capacity;
+   end Is_Full;
+   
    -------------
    -- Enqueue --
    -------------
