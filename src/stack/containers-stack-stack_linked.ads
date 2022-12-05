@@ -1,16 +1,16 @@
+with Ada.Strings;
+with Ada.Strings.Text_Buffers;
+with Containers.Stack;
 with Ada.Finalization;
-
-private with Ada.Streams;
-private with Ada.Strings.Text_Buffers;
 
 generic
    type Element_Type is private;
 
-package Containers.Stack_Linked is
+package Containers.Stack.Stack_Linked is
 
    type Stack (Capacity : Count_Type) is private;
-
-   function Length (Container : in Stack) return Count_Type;
+   
+   function Length1 (Container : in Stack) return Count_Type;
    function Is_Empty (Container : in Stack) return Boolean;
    function Is_Full (Container : in Stack) return Boolean;
 
@@ -25,7 +25,7 @@ package Containers.Stack_Linked is
      (Container : in out Stack;
       Element   : out Element_Type;
       Success   : out Boolean);
-   
+
 private
 
    type Node_Type;
@@ -36,8 +36,8 @@ private
       Next    : Node_Access;
    end record;
 
-   type Stack (Capacity : Count_Type) is new Ada.Finalization.Controlled with
-   record
+   type Stack (Capacity : Count_Type) is new Ada.Finalization.Controlled and
+     Containers.Stack.Stack_Interface with record
       Head   : Node_Access := null;
       Length : Count_Type  := 0;
    end record with Put_Image => Put_Image;
@@ -50,4 +50,4 @@ private
    procedure Adjust (Container : in out Stack);
    procedure Finalize (Container : in out Stack);
 
-end Containers.Stack_Linked;
+end Containers.Stack.Stack_Linked;
