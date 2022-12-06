@@ -1,5 +1,5 @@
-with Ada.Strings;
-with Ada.Strings.Text_Buffers;
+--  with Ada.Strings;
+--  with Ada.Strings.Text_Buffers;
 with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Unchecked_Deallocation;
 package body Containers.Stack.Stack_Linked is
