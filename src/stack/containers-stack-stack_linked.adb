@@ -10,10 +10,10 @@ package body Containers.Stack.Stack_Linked is
    -- Length --
    ------------
 
-   function Length1 (Container : in Stack) return Count_Type is
+   function Length (Container : in Stack) return Count_Type is
    begin
       return Container.Length;
-   end Length1;
+   end Length;
    
    --------------
    -- Is_Empty --
