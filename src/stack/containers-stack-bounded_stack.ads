@@ -1,14 +1,10 @@
 with Ada.Strings;
 with Ada.Strings.Text_Buffers;
-with Containers.Stack.Stack_Interface;
 
 generic
    type Element_Type is private;
 
 package Containers.Stack.Bounded_Stack is
-
-   package Stack_Interface is
-     new Containers.Stack.Stack_Interface (Element_Type);
 
    type Stack (Capacity : Count_Type) is private;
    

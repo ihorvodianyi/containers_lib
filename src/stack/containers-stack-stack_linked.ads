@@ -1,19 +1,13 @@
 with Ada.Strings;
 with Ada.Strings.Text_Buffers;
-with Containers.Stack.Stack_Interface;
 with Ada.Finalization;
 
 generic
    type Element_Type is private;
    
-package Containers.Stack.Stack_Linked is
-     
-   package Stack_Interface is
-     new Containers.Stack.Stack_Interface (Element_Type);
-   
-   type Stack (Capacity : Count_Type) is
-     new Ada.Finalization.Controlled and
-     Stack_Interface.Stack_Interface with private;
+package Containers.Stack.Stack_Linked is     
+      
+   type Stack (Capacity : Count_Type) is private;
    
    function Length (Container : in Stack) return Count_Type;
    function Is_Empty (Container : in Stack) return Boolean;
@@ -41,9 +35,7 @@ private
       Next    : Node_Access;
    end record;
 
-   type Stack (Capacity : Count_Type) is
-     new Ada.Finalization.Controlled and
-     Stack_Interface.Stack_Interface with
+   type Stack (Capacity : Count_Type) is new Ada.Finalization.Controlled with
       record
          Head   : Node_Access := null;
          Length : Count_Type  := 0;
