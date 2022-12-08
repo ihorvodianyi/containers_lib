@@ -49,8 +49,8 @@ package body Containers.Stack.Bounded_Stack is
    begin
       if Container.Length < Container.Capacity
       then
-         Container.Nodes(Container.Length) := New_Item;
-         Container.Length := Container.Length + 1;         
+         Container.Length := Container.Length + 1;
+         Container.Nodes(Container.Length) := New_Item;                  
          Success := True;
       else
          Success := False;
@@ -86,7 +86,7 @@ package body Containers.Stack.Bounded_Stack is
    is
    begin
       Stream.Put("{Capacity: " & Container.Capacity'Image & " | Length: " & Container.Length'Image & " | Array: [");    
-      for index in 0..Container.Length - 1
+      for index in 1..Container.Length
       loop
          Element_Type'Put_Image(Stream, Container.Nodes(index));
       end loop;
