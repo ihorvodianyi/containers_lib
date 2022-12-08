@@ -1,6 +1,6 @@
 with Ada.Unchecked_Deallocation;
 
-package body Containers.Stack.Stack is
+package body Containers.Stacks.Stack is
    
    procedure Free is
      new Ada.Unchecked_Deallocation (Elements_Type, Elements_Access);
@@ -126,4 +126,4 @@ package body Containers.Stack.Stack is
    end Put_Image;
 
 
-end Containers.Stack.Stack;
+end Containers.Stacks.Stack;

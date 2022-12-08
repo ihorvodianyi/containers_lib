@@ -5,7 +5,7 @@ with Ada.Finalization;
 generic
    type Element_Type is private;
    
-package Containers.Stack.Stack_Linked is     
+package Containers.Stacks.Stack_Linked is     
       
    type Stack (Capacity : Count_Type) is private;
    
@@ -49,4 +49,4 @@ private
    procedure Adjust (Container : in out Stack);
    procedure Finalize (Container : in out Stack);
 
-end Containers.Stack.Stack_Linked;
+end Containers.Stacks.Stack_Linked;

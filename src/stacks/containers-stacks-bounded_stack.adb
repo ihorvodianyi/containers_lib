@@ -1,4 +1,4 @@
-package body Containers.Stack.Bounded_Stack is
+package body Containers.Stacks.Bounded_Stack is
 
    ------------
    -- Length --
@@ -93,4 +93,4 @@ package body Containers.Stack.Bounded_Stack is
       Stream.Put("]}");
    end Put_Image;
 
-end Containers.Stack.Bounded_Stack;
+end Containers.Stacks.Bounded_Stack;

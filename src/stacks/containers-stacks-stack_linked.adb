@@ -1,7 +1,7 @@
 with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Unchecked_Deallocation;
 
-package body Containers.Stack.Stack_Linked is
+package body Containers.Stacks.Stack_Linked is
    
    procedure Free(Node : in out Node_Access);
 
@@ -177,4 +177,4 @@ package body Containers.Stack.Stack_Linked is
       Clear(Container);
    end Finalize;
 
-end Containers.Stack.Stack_Linked;
+end Containers.Stacks.Stack_Linked;
