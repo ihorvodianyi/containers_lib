@@ -37,8 +37,8 @@ private
 
    type Stack (Capacity : Count_Type) is new Ada.Finalization.Limited_Controlled with
       record
-         Elements  : Elements_Access := new Elements_Type (10);
-         Length : Count_Type := 0;
+         Elements : Elements_Access := new Elements_Type (10);
+         Length   : Count_Type := 0;
       end record with Put_Image => Put_Image;
    
    procedure Finalize (Container : in out Stack);
