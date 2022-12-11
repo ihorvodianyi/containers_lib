@@ -1,6 +1,4 @@
 with Ada.Finalization;
-with Ada.Strings;
-with Ada.Strings.Text_Buffers;
 
 generic
    type Element_Type is private;
@@ -39,12 +37,8 @@ private
       record
          Elements : Elements_Access := new Elements_Type (10);
          Length   : Count_Type := 0;
-      end record with Put_Image => Put_Image;
+      end record;
    
    procedure Finalize (Container : in out Stack);
-   
-   procedure Put_Image
-     (Stream    : in out Ada.Strings.Text_Buffers.Root_Buffer_Type'Class;
-      Container : in     Stack);
 
 end Containers.Stacks.Stack;

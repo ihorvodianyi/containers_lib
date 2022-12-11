@@ -72,7 +72,7 @@ package body Containers.Stacks.Stack is
             Dst.Elements (1..Container.Elements.size) := Container.Elements.Elements (1..Container.Elements.size);
             Free (Container.Elements);
             Container.Elements := Dst;
-            Container.Length := Container.Length + 1;
+            Container.Length := @ + 1;
             Container.Elements.Elements(Container.Length) := New_Item;
             Success := True;
          end if;
@@ -93,7 +93,7 @@ package body Containers.Stacks.Stack is
          Success := False;
       else
          Element := Container.Elements.Elements(Container.Length);
-         Container.Length := Container.Length - 1;
+         Container.Length := @ - 1;
          Success := True;
       end if;
    end Pop;
@@ -107,23 +107,5 @@ package body Containers.Stacks.Stack is
    begin
       Free (Container.Elements);
    end Finalize;
-      
-   ---------------
-   -- Put_Image --
-   ---------------
-
-   procedure Put_Image
-     (Stream    : in out Ada.Strings.Text_Buffers.Root_Buffer_Type'Class;
-      Container : in Stack)
-   is
-   begin
-      Stream.Put("{Capacity: " & Container.Capacity'Image & " | Length: " & Container.Length'Image & "| Size: " & Container.Elements.size'Image & " | Array: [");    
-      for index in 1..Container.Length
-      loop
-         Element_Type'Put_Image(Stream, Container.Elements.Elements(index));
-      end loop;
-      Stream.Put("]}");
-   end Put_Image;
-
 
 end Containers.Stacks.Stack;

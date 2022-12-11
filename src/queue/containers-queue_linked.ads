@@ -1,8 +1,5 @@
 with Ada.Finalization;
 
-private with Ada.Streams;
-private with Ada.Strings.Text_Buffers;
-
 generic
    type Element_Type is private;
 
@@ -40,12 +37,7 @@ private
          Head   : Node_Access := null;
          Tail   : Node_Access := null;
          Length : Count_Type  := 0;
-      end record with Put_Image => Put_Image;
-   
-
-   procedure Put_Image
-     (Stream    : in out Ada.Strings.Text_Buffers.Root_Buffer_Type'Class;
-      Container : in     Queue);
+      end record;
 
    procedure Initialize (Container : in out Queue);
    procedure Adjust (Container : in out Queue);

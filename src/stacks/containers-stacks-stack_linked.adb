@@ -1,4 +1,3 @@
-with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Unchecked_Deallocation;
 
 package body Containers.Stacks.Stack_Linked is
@@ -49,7 +48,7 @@ package body Containers.Stacks.Stack_Linked is
          Node := Container.Head;
          Container.Head := Container.Head.Next;
          Free(Node);
-         Container.Length := Container.Length - 1;
+         Container.Length := @ - 1;
       end loop;
    end Clear;
       
@@ -68,7 +67,7 @@ package body Containers.Stacks.Stack_Linked is
       then
          New_Node := new Node_Type'(New_Item, Container.Head);
          Container.Head := New_Node;
-         Container.Length := Container.Length + 1;
+         Container.Length := @ + 1;
          Success := True;
       else
          Success := False;
@@ -93,7 +92,7 @@ package body Containers.Stacks.Stack_Linked is
          Container.Head := Container.Head.Next;
          Element := Node.Element;
          Free(Node);
-         Container.Length := Container.Length - 1;
+         Container.Length := @ - 1;
          Success := True;
       end if;
    end Pop;
@@ -111,25 +110,6 @@ package body Containers.Stacks.Stack_Linked is
       Deallocate(Node);
    end Free;
    
-   ---------------
-   -- Put_Image --
-   ---------------
-
-   procedure Put_Image
-     (Stream : in out Ada.Strings.Text_Buffers.Root_Buffer_Type'Class;
-      Container : in Stack)
-   is
-      Node   : Node_Access := Container.Head;
-   begin
-      Stream.Put("{Capacity: " & Container.Capacity'Image & " | Length: " & Container.Length'Image & " | Head: " & Container.Head'Image & " [");    
-      while Node /= null
-      loop
-         Element_Type'Put_Image(Stream, Node.Element);
-         Node := Node.Next;
-      end loop;      
-      Stream.Put("]}");
-   end Put_Image;
-   
    ----------------
    -- Initialize --
    ----------------
@@ -137,7 +117,7 @@ package body Containers.Stacks.Stack_Linked is
    procedure Initialize(Container : in out Stack)
    is
    begin
-      Put_Line("Initialize: " & Container'Image);
+      null;
    end Initialize;
    
    ------------

@@ -1,5 +1,3 @@
-with Ada.Strings;
-with Ada.Strings.Text_Buffers;
 with Ada.Finalization;
 
 generic
@@ -39,11 +37,7 @@ private
       record
          Head   : Node_Access := null;
          Length : Count_Type  := 0;
-      end record with Put_Image => Put_Image;
-
-   procedure Put_Image
-     (Stream    : in out Ada.Strings.Text_Buffers.Root_Buffer_Type'Class;
-      Container : in     Stack);
+      end record;
 
    procedure Initialize (Container : in out Stack);
    procedure Adjust (Container : in out Stack);
