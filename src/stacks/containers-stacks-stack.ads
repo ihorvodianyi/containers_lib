@@ -1,7 +1,7 @@
 with Ada.Finalization;
 
 generic
-   type Element_Type is private;
+   type Element_Type is limited private;
 
 package Containers.Stacks.Stack is
 

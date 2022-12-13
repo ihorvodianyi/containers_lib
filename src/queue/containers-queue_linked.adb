@@ -116,43 +116,6 @@ package body Containers.Queue_Linked is
       Node.Next := Node;
       Deallocate(Node);
    end Free;
-    
-   ----------------
-   -- Initialize --
-   ----------------
-
-   procedure Initialize(Container : in out Queue)
-   is
-   begin
-      null;
-   end Initialize;
-   
-   ------------
-   -- Adjust --
-   ------------
-
-   procedure Adjust(Container : in out Queue)
-   is
-      Source : Node_Access := Container.Head;
-      Node   : Node_Access;
-   begin
-      if Source = null then
-         return;
-      end if;
-      
-      Container.Head := new Node_Type'(Source.Element, null);
-      Container.Length := 1;
-      Node := Container.Head;
-      Source := Source.Next;
-      
-      while Source /= null
-      loop
-         Node.Next := new Node_Type'(Source.Element, null);
-         Node := Node.Next;
-         Container.Length := @ + 1;
-         Source := Source.Next;
-      end loop;
-   end Adjust;
    
    --------------
    -- Finalize --

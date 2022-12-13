@@ -15,9 +15,5 @@ library project Containers_Lib is
       for Switches ("ada") use ("-gnatX");
    end Compiler;
 
-   package Prove is
-      for Proof_Switches ("ada") use ("--level=4", "--mode=check");
-   end Prove;
-
 end Containers_Lib;
 

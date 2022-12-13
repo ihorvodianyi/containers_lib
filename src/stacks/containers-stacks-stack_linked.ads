@@ -2,11 +2,11 @@ with Ada.Finalization;
 
 generic
    type Element_Type is private;
-   
-package Containers.Stacks.Stack_Linked is     
-      
-   type Stack (Capacity : Count_Type) is private;
-   
+
+package Containers.Stacks.Stack_Linked is
+
+   type Stack (Capacity : Count_Type) is limited private;
+
    function Length (Container : in Stack) return Count_Type;
    function Is_Empty (Container : in Stack) return Boolean;
    function Is_Full (Container : in Stack) return Boolean;
@@ -14,14 +14,12 @@ package Containers.Stacks.Stack_Linked is
    procedure Clear (Container : in out Stack);
 
    procedure Push
-     (Container : in out Stack;
-      New_Item  : in Element_Type;
-      Success   : out Boolean);
-   
+     (Container : in out Stack; New_Item : in Element_Type;
+      Success   :    out Boolean);
+
    procedure Pop
-     (Container : in out Stack;
-      Element   : out Element_Type;
-      Success   : out Boolean);
+     (Container : in out Stack; Element : out Element_Type;
+      Success   :    out Boolean);
 
 private
 
@@ -33,14 +31,12 @@ private
       Next    : Node_Access;
    end record;
 
-   type Stack (Capacity : Count_Type) is new Ada.Finalization.Controlled with
+   type Stack (Capacity : Count_Type) is new Ada.Finalization.Limited_Controlled with
       record
          Head   : Node_Access := null;
          Length : Count_Type  := 0;
       end record;
 
-   procedure Initialize (Container : in out Stack);
-   procedure Adjust (Container : in out Stack);
    procedure Finalize (Container : in out Stack);
 
 end Containers.Stacks.Stack_Linked;

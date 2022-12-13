@@ -5,7 +5,7 @@ generic
 
 package Containers.Queue_Linked is
 
-   type Queue (Capacity : Count_Type) is private;
+   type Queue (Capacity : Count_Type) is limited private;
    
    function Length (Container : in Queue) return Count_Type;
    function Is_Empty (Container : in Queue) return Boolean;
@@ -26,21 +26,18 @@ private
    type Node_Type;
    type Node_Access is access Node_Type;
 
-   type Node_Type is
-   limited record
-      Element : aliased Element_Type;
+   type Node_Type is limited record
+      Element : Element_Type;
       Next    : Node_Access;
    end record;
    
-   type Queue (Capacity : Count_Type) is new Ada.Finalization.Controlled with
+   type Queue (Capacity : Count_Type) is new Ada.Finalization.Limited_Controlled with
       record
          Head   : Node_Access := null;
          Tail   : Node_Access := null;
          Length : Count_Type  := 0;
       end record;
 
-   procedure Initialize (Container : in out Queue);
-   procedure Adjust (Container : in out Queue);
    procedure Finalize (Container : in out Queue);
 
 end Containers.Queue_Linked;

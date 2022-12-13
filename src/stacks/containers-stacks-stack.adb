@@ -56,7 +56,7 @@ package body Containers.Stacks.Stack is
       if Container.Length < Container.Elements.size
       then
          Container.Length := Container.Length + 1;
-         Container.Elements.Elements(Container.Length) := New_Item;                  
+         Container.Elements.Elements(Container.Length) := Element_Type'(New_Item);                  
          Success := True;
       else
          if Container.Elements.size = Container.Capacity
